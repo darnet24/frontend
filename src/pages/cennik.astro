@@ -1,0 +1,84 @@
+---
+import Layout from "../layouts/Layout.astro";
+// 1) Wczytujemy adres backendu z .env (np. "https://h9kf3vfew4.darnet24.pl")
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+
+// 2) Pobieramy cały JSON spod /api/cms-content
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json(); 
+
+// 3) Wyciągamy tylko sekcję "cennik" (bo w cms-content.json całość jest pod kluczem "cennik")
+const cennik = cms.cennik;
+---
+
+<Layout title="Cennik usług IT | Darnet24" description={cennik.description}>
+
+  <!-- CTA do obsługi firm -->
+  <section class="py-6 bg-yellow-400 text-black text-center">
+    <p class="text-lg">
+      {cennik.cta.text}
+      <a href={cennik.cta.linkUrl} class="underline font-semibold hover:text-gray-800 transition">
+        {cennik.cta.linkText}
+      </a>
+    </p>
+  </section>
+
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800">
+    <h1 class="text-4xl font-extrabold mb-4">{cennik.title}</h1>
+    <p class="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+      {cennik.description}
+    </p>
+  </section>
+
+  <!-- CENNIK USŁUG -->
+<section class="py-16 px-6 max-w-5xl mx-auto space-y-12">
+  {cennik.sections.map((section) => (
+    <div>
+      <h2 class="text-2xl font-bold mb-4 border-b pb-2">{section.title}</h2>
+      <div class="space-y-2">
+        {section.items.map((item) => (
+          <div class="grid grid-cols-2 border-b py-2 dark:border-gray-700">
+            <div set:html={item.label}></div>
+            <div class="text-right font-semibold text-yellow-500">{item.price}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+
+  <!-- DOPŁATY I DOJAZD -->
+  <section class="py-16 px-6 bg-gray-800 text-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-center mb-6">Koszty dojazdu i dopłaty</h2>
+      <ul class="list-disc list-inside space-y-2 text-left text-gray-100">
+        {cennik.extras.dojazd.map((d) => (
+          <li><strong>{d.label}:</strong> {d.value}</li>
+        ))}
+        {cennik.extras.doplaty.map((d) => (
+          <li><strong>{d.label}:</strong> {d.value}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA: Umów usługę -->
+  <section class="text-center py-20 bg-yellow-400 text-black">
+    <h2 class="text-3xl font-bold mb-4">{cennik.callToAction.heading}</h2>
+    <p class="mb-6 text-lg max-w-xl mx-auto">{cennik.callToAction.text}</p>
+    <a
+      href={cennik.callToAction.buttonLink}
+      class="inline-block bg-black text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-gray-800 transition"
+    >
+      {cennik.callToAction.buttonText}
+    </a>
+  </section>
+
+
+</Layout>

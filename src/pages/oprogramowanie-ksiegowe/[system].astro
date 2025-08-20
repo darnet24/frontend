@@ -1,0 +1,159 @@
+---
+import { Astro } from "astro";
+import Layout from "../../layouts/Layout.astro";
+
+/**
+ * getStaticPaths – buduje listę slugów systemów księgowych na podstawie CMS
+ * Oczekuje struktury cms.softwareDetails: { raks: {...}, wapro: {...}, ... }
+ */
+export async function getStaticPaths() {
+  const BACKEND_URL =
+    import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+
+  const res = await fetch(`${BACKEND_URL}/api/cms-content`);
+  if (!res.ok) {
+    throw new Error(`Błąd w getStaticPaths (software): ${res.status}`);
+  }
+  const cms = await res.json();
+
+  const detailsObj = cms.softwareDetails || {};
+  const slugs = Object.keys(detailsObj);
+
+  return slugs.map((slug) => ({
+    params: { system: slug },
+  }));
+}
+
+// -------------------------------------------------------------
+// Front‑matter dla każdej ścieżki /oprogramowanie-ksiegowe/[system]
+// -------------------------------------------------------------
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS (software): ${response.status}`);
+}
+const cms = await response.json();
+
+const detailsObj = cms.softwareDetails || {};
+const { system } = Astro.params;
+
+const sw = detailsObj[system];
+if (!sw) {
+  throw new Error(`Nie znaleziono systemu: ${system}`);
+}
+
+// SEO
+const pageTitle = sw.title || sw.heading || `Usługi dla ${system.toUpperCase()}`;
+const pageDescription =
+  sw.description ||
+  `Instalacja, aktualizacja, migracja oraz serwis ${system.toUpperCase()} – bazy SQL/Firebird, backup, optymalizacja.`;
+
+// pomocnicze
+const hasPricing = Array.isArray(sw.pricing) && sw.pricing.length > 0;
+const hasBullets = Array.isArray(sw.points) && sw.points.length > 0;
+const hasFaq = Array.isArray(sw.faq) && sw.faq.length > 0;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- HERO -->
+  <section class="py-20 px-6 bg-gray-800 text-center text-white">
+    <h1 class="text-4xl font-bold mb-4">{sw.heading || pageTitle}</h1>
+    <p class="text-lg max-w-3xl mx-auto text-gray-300">
+      {sw.intro || "Kompleksowa pomoc: instalacje, aktualizacje, migracje, serwis i backup."}
+    </p>
+  </section>
+
+  <!-- ZAKRES PRAC -->
+  {hasBullets && (
+    <section class="py-16 px-6 max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-center text-white">
+        Co robimy w ramach {sw.shortName || pageTitle}
+      </h2>
+
+      <div class="pl-8 md:pl-16 lg:pl-20">
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-200 list-disc list-inside">
+          {sw.points.map((p) => <li>{p}</li>)}
+          {sw.points.length % 2 !== 0 && <li class="invisible">placeholder</li>}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- CENNIK / WIDEŁKI -->
+  {hasPricing && (
+    <section class="py-16 px-6 bg-gray-800">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold mb-6 text-center text-white">Cennik usług</h2>
+        <p class="text-sm text-gray-400 text-center mb-4">
+            Wszystkie podane ceny są cenami netto (nie zawierają podatku VAT).
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-gray-200">
+            <thead>
+              <tr class="border-b border-gray-700 text-gray-300">
+                <th class="py-3 px-4">Usługa</th>
+                <th class="py-3 px-4">Stawka</th>
+                <th class="py-3 px-4">Uwagi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sw.pricing.map((row) => (
+                <tr class="border-b border-gray-700">
+                  <td class="py-3 px-4">{row.name}</td>
+                  <td set:html={row.price} class="py-3 px-4"></td>
+                  <td class="py-3 px-4 text-gray-400">{row.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {sw.pricingNote && (
+          <p class="text-sm text-gray-400 mt-4">{sw.pricingNote}</p>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- INFO O BAZACH / SERWERACH -->
+  {sw.engineNote && (
+    <section class="py-12 px-6 max-w-4xl mx-auto">
+      <h3 class="text-xl font-semibold text-white mb-3">Bazy danych i serwery</h3>
+      <p class="text-gray-300">{sw.engineNote}</p>
+    </section>
+  )}
+
+  <!-- FAQ -->
+  {hasFaq && (
+    <section class="py-16 px-6 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-center text-white">FAQ</h2>
+      <div class="space-y-6">
+        {sw.faq.map((q) => (
+          <details class="bg-gray-800 rounded-2xl p-5">
+            <summary class="cursor-pointer font-semibold text-white">
+              {q.q}
+            </summary>
+            <div class="mt-3 text-gray-300">{q.a}</div>
+          </details>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Umów instalację lub aktualizację</h2>
+    <p class="mb-6">
+      Działamy zdalnie i na miejscu. Wycena zwykle w ciągu 15–30 min.
+    </p>
+    <a
+      href="/kontakt"
+      class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition"
+    >
+      Skontaktuj się
+    </a>
+  </section>
+</Layout>

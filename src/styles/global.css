@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Własne style bazowe */
+@layer base {
+  html, body, input, textarea, button, select {
+    font-family: theme('fontFamily.sans') !important;
+  }
+
+  /* Ukrycie paska przewijania */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE i Edge */
+    scrollbar-width: none;    /* Firefox */
+  }
+}

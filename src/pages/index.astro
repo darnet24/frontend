@@ -1,0 +1,232 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import NewsletterSection from '../components/NewsletterSection.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+// 1) Pobierz wszystkie dane z CMS
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json();
+
+const {
+  seo,
+  hero,
+  servicesIntro,
+  services,
+  why,
+  testimonials,
+  partners,
+  locationsIntro,
+  locationList
+} = cms;
+---
+
+<Layout title={seo.title} description={seo.description}>
+  <Navbar slot="navbar" />
+
+    <!-- HERO -->
+    <section class="relative text-center py-28 px-6 text-white">
+      <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+      <div
+        class="absolute inset-0 bg-cover bg-center z-[-1]"
+        style="background-image: url('/images/hero-bg.webp');"
+      ></div>
+      <div class="relative z-10">
+        <h1 class="text-5xl font-bold mb-4 drop-shadow-md">{hero.heading}</h1>
+        <p class="text-xl mb-6 drop-shadow-md">{hero.subheading}</p>
+        <a
+          href="/kontakt"
+          class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-6 rounded transition"
+        >
+          Skontaktuj się z nami
+        </a>
+      </div>
+    </section>
+
+  <!-- OBSZARY WSPÓŁPRACY -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 text-center">
+    <h2 class="text-3xl font-bold mb-6">Obsługa informatyczna dla firm</h2>
+    <p class="max-w-3xl mx-auto mb-10 text-gray-700 dark:text-gray-300">
+      {servicesIntro}
+    </p>
+    <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      {services.map((svc) => (
+        <Card
+          title={svc.title}
+          description={svc.description}
+          image={svc.image}
+        />
+      ))}
+    </div>
+  </section>
+  <!-- NASZE USLUGI -->
+<section class="py-16 px-6 bg-gray-800">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-white mb-4">
+      Nasze usługi
+    </h2>
+    <p class="text-gray-300 max-w-3xl mx-auto mb-10">
+      Kompleksowe wsparcie IT dla firm i klientów indywidualnych – od okablowania i serwerów,
+      przez programy księgowe, po profesjonalne składanie komputerów.
+    </p>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4 text-left">
+      <!-- Obsługa serwerów -->
+      <a href="/uslugi/obsluga-serwerow"
+         class="block bg-gray-700 rounded-2xl p-6 hover:bg-gray-600 transition">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🖥️</span>
+          <h3 class="text-xl font-semibold text-white">Obsługa i administracja serwerów</h3>
+        </div>
+        <p class="text-gray-300">
+          Windows / Linux, wirtualizacja (Hyper-V, VMware, Proxmox), backup i monitoring SLA.
+        </p>
+        <span class="inline-block mt-4 text-yellow-400 font-semibold">Szczegóły →</span>
+      </a>
+
+      <!-- Okablowanie LAN -->
+      <a href="/uslugi/okablowanie-sieci-lan"
+         class="block bg-gray-700 rounded-2xl p-6 hover:bg-gray-600 transition">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🧰</span>
+          <h3 class="text-xl font-semibold text-white">Okablowanie sieci LAN</h3>
+        </div>
+        <p class="text-gray-300">
+          Prowadzenie kabli, gniazda RJ45/keystone, patch panele, szafy rack, pomiary i dokumentacja.
+        </p>
+        <span class="inline-block mt-4 text-yellow-400 font-semibold">Szczegóły →</span>
+      </a>
+
+      <!-- Składanie komputerów -->
+      <a href="/uslugi/skladanie-komputerow"
+         class="block bg-gray-700 rounded-2xl p-6 hover:bg-gray-600 transition">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">🛠️</span>
+          <h3 class="text-xl font-semibold text-white">Składanie komputerów</h3>
+        </div>
+        <p class="text-gray-300">
+          Doradztwo, montaż, ciche profile, testy stabilności i raport. Zestawy biurowe, gaming, workstation.
+        </p>
+        <span class="inline-block mt-4 text-yellow-400 font-semibold">Szczegóły →</span>
+      </a>
+
+      <!-- Programy księgowe (hub) -->
+      <a href="/uslugi/programy-ksiegowe"
+         class="block bg-gray-700 rounded-2xl p-6 hover:bg-gray-600 transition">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-2xl">📚</span>
+          <h3 class="text-xl font-semibold text-white">Programy księgowe</h3>
+        </div>
+        <p class="text-gray-300">
+          Instalacje, aktualizacje, migracje i naprawy: RAKS, WAPRO, Comarch, Płatnik, Insert, Symfonia.
+        </p>
+        <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz listę systemów →</span>
+      </a>
+    </div>
+
+    <!-- Link zbiorczy -->
+    <div class="mt-10">
+      <a href="/uslugi" class="text-yellow-400 hover:underline font-semibold">
+        Pełna oferta usług →
+      </a>
+    </div>
+  </div>
+</section>
+
+    <!-- DLA KLIENTÓW INDYWIDUALNYCH – INTRO -->
+    <section class="py-16 px-6 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-center">
+      <h2 class="text-3xl font-bold mb-4">Dla klientów indywidualnych</h2>
+      <p class="max-w-3xl mx-auto mb-6">
+        Prowadzimy punkt stacjonarny w Ursusie – naprawy laptopów, przyspieszanie systemów, wymiany dysków na SSD,
+        czyszczenie i konserwacja. Pomagamy również zdalnie – szybko i skutecznie.
+      </p>
+      <div class="flex justify-center gap-4 flex-wrap">
+        <a
+          href="/kontakt"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition"
+        >
+          Umów wizytę
+        </a>
+        <a
+          href="/uslugi/skladanie-komputerow"
+          class="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-6 rounded transition"
+        >
+          Składanie komputerów
+        </a>
+      </div>
+    </section>
+  
+
+  <!-- DLACZEGO MY -->
+  <section class="py-16 px-6 max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-6">Dlaczego firmy wybierają Darnet24?</h2>
+    <ul class="grid md:grid-cols-2 gap-6 text-left text-gray-700 dark:text-gray-300">
+      {why.map((item) => (
+        <li class="flex items-start gap-3">
+          <span class="text-yellow-400 mt-1">✅</span>
+          <p>{item}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- OPINIE -->
+  <section class="py-16 px-6 bg-white dark:bg-gray-900 text-center">
+    <h2 class="text-3xl font-bold mb-6">Co mówią nasi klienci?</h2>
+    <div class="max-w-4xl mx-auto space-y-6 text-gray-700 dark:text-gray-300">
+      {testimonials.map((t) => (
+        <blockquote>“{t.text}” – <strong>{t.author}</strong></blockquote>
+      ))}
+    </div>
+  </section>
+
+  <!-- PARTNERZY -->
+  <section class="py-12 bg-gray-100 dark:bg-gray-900">
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Rozwiązania, które wspieramy</h2>
+    <div class="text-center max-w-2xl mx-auto text-gray-700 dark:text-gray-300 mb-6">
+      Na co dzień konfigurujemy, serwisujemy i dostarczamy sprzęt czołowych producentów – m.in. Microsoft, Dell, HP, Lenovo, Cisco, Intel, AMD i wielu innych..
+    </div>
+    <div id="partner-slider" class="flex gap-8 overflow-x-auto no-scrollbar px-6 py-4 scroll-smooth">
+      {partners.map((logo) => (
+        <div class="min-w-[150px] h-24 flex items-center justify-center bg-white rounded-xl shadow-md p-3 transition-transform hover:scale-105">
+          <img src={logo.src} alt={logo.alt} class="object-contain max-h-full" loading="lazy" />
+        </div>
+      ))}
+    </div>
+    <script is:inline>
+      const slider = document.getElementById('partner-slider');
+      let pos = 0;
+      setInterval(() => {
+        pos = (pos + 160) % (slider.scrollWidth - slider.clientWidth);
+        slider.scrollTo({ left: pos, behavior: 'smooth' });
+      }, 3000);
+    </script>
+  </section>
+
+  <!-- LOKALIZACJE -->
+  <section class="py-16 px-6 text-center bg-gray-100 dark:bg-gray-800">
+    <h2 class="text-3xl font-bold mb-4">{locationsIntro}</h2>
+    <div class="flex flex-wrap justify-center gap-6 text-lg text-yellow-400 max-w-4xl mx-auto">
+      {locationList.map((loc) => (
+        <a href={loc.link} class="hover:underline">{loc.name}</a>
+      ))}
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <NewsletterSection />
+
+  <!-- CTA KOŃCOWE -->
+  <section class="py-20 px-6 text-center bg-yellow-400 text-black">
+    <h2 class="text-3xl font-bold mb-4">Potrzebujesz opieki informatycznej?</h2>
+    <p class="mb-6">Skontaktuj się z nami – przygotujemy indywidualną ofertę.</p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">Kontakt</a>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>

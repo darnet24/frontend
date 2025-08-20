@@ -1,0 +1,207 @@
+---
+const BACKEND_URL = import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+---
+
+<form id="remote-support-form" class="space-y-4" data-backend-url={BACKEND_URL}>
+  <input
+    type="text"
+    name="name"
+    placeholder="Imię i nazwisko"
+    required
+    class="w-full p-2 border rounded text-black"
+  />
+  <input
+    type="email"
+    name="email"
+    placeholder="Adres e-mail"
+    required
+    class="w-full p-2 border rounded text-black"
+  />
+  <input
+    type="tel"
+    name="phone"
+    placeholder="Numer telefonu"
+    required
+    class="w-full p-2 border rounded text-black"
+  />
+
+  <input type="hidden" name="packageName" />
+  <input type="hidden" name="amount" />
+
+  <label class="flex items-start gap-2 text-sm">
+    <input type="checkbox" name="zgodaRODO" required />
+    <span>
+      Wyrażam zgodę na przetwarzanie danych zgodnie z
+      <a href="/polityka-prywatnosci" class="underline" target="_blank" rel="noopener">
+        Polityką prywatności
+      </a>.
+    </span>
+  </label>
+
+  <label class="flex items-start gap-2 text-sm">
+    <input type="checkbox" name="regulamin" required />
+    <span>
+      Akceptuję
+      <a href="/regulamin" class="underline" target="_blank" rel="noopener">Regulamin świadczenia usług</a>.
+    </span>
+  </label>
+
+  <label class="flex items-start gap-2 text-sm">
+    <input type="checkbox" id="chceFakture" name="invoice_needed" />
+    <span>Chcę otrzymać fakturę</span>
+  </label>
+
+  <div id="daneFaktura" class="hidden space-y-2">
+    <input type="text" name="company" placeholder="Nazwa firmy / osoba prywatna" class="w-full p-2 border rounded text-black" />
+    <input type="text" name="nip" placeholder="NIP (jeśli dotyczy)" class="w-full p-2 border rounded text-black" />
+    <div class="grid grid-cols-2 gap-4">
+      <input type="text" name="ulica" placeholder="Ulica" class="w-full p-2 border rounded text-black" />
+      <input type="text" name="numer" placeholder="Numer" class="w-full p-2 border rounded text-black" />
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <input type="text" name="kod" placeholder="Kod pocztowy" class="w-full p-2 border rounded text-black" />
+      <input type="text" name="miasto" placeholder="Miasto" class="w-full p-2 border rounded text-black" />
+    </div>
+  </div>
+
+  <div id="remote-msg" class="text-sm"></div>
+
+  <div class="text-right">
+    <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-2 rounded">
+      Zamawiam i przechodzę do płatności
+    </button>
+  </div>
+</form>
+
+<script is:inline>
+  const API_BASE_URL = document.getElementById("remote-support-form").dataset.backendUrl;
+
+  const form = document.getElementById("remote-support-form");
+  const zgodaRODO = form.querySelector("input[name='zgodaRODO']");
+  const regulamin = form.querySelector("input[name='regulamin']");
+
+  zgodaRODO.addEventListener("invalid", () => {
+    zgodaRODO.classList.add("ring-2", "ring-red-500", "ring-offset-2");
+  });
+  zgodaRODO.addEventListener("change", () => {
+    if (zgodaRODO.checked) {
+      zgodaRODO.classList.remove("ring-2", "ring-red-500", "ring-offset-2");
+    }
+  });
+
+  regulamin.addEventListener("invalid", () => {
+    regulamin.classList.add("ring-2", "ring-red-500", "ring-offset-2");
+  });
+  regulamin.addEventListener("change", () => {
+    if (regulamin.checked) {
+      regulamin.classList.remove("ring-2", "ring-red-500", "ring-offset-2");
+    }
+  });
+
+  document.getElementById("chceFakture").addEventListener("change", function () {
+    const daneFaktura = document.getElementById("daneFaktura");
+    const inputs = daneFaktura.querySelectorAll("input");
+
+    if (this.checked) {
+      daneFaktura.classList.remove("hidden");
+      inputs.forEach(el => {
+        if (el.name !== "nip") {
+          el.setAttribute("required", "required");
+        }
+      });
+    } else {
+      daneFaktura.classList.add("hidden");
+      inputs.forEach(el => el.removeAttribute("required"));
+    }
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg  = document.getElementById("remote-msg");
+    const submitBtn = form.querySelector("button[type='submit']");
+    msg.textContent = "";
+    msg.className = "";
+
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailRegex.test(email)) {
+      msg.textContent = "Podaj poprawny adres e-mail.";
+      msg.className = "text-red-500 text-sm font-semibold";
+      return;
+    }
+
+    const payload = {
+      name: formData.get("name"),
+      email,
+      phone: formData.get("phone"),
+      zgodaRODO: formData.get("zgodaRODO") === "on",
+      regulamin: formData.get("regulamin") === "on",
+      invoice_needed: formData.get("invoice_needed") === "on" ? 1 : 0,
+      company: formData.get("company") || "",
+      nip: formData.get("nip") || "",
+      ulica: formData.get("ulica") || "",
+      numer: formData.get("numer") || "",
+      kod: formData.get("kod") || "",
+      miasto: formData.get("miasto") || "",
+      packageName: formData.get("packageName"),
+      amount: formData.get("amount"),
+    };
+
+
+    if (!payload.packageName || !payload.amount) {
+      msg.textContent = "Błąd: brak informacji o wybranym pakiecie.";
+      msg.className = "text-red-500 text-sm font-semibold";
+      return;
+    }
+
+    try {
+      const spinner = document.getElementById("spinner");
+      if (spinner) spinner.classList.remove("hidden");
+
+      submitBtn.disabled = true;
+      msg.textContent = "Wysyłanie zamówienia...";
+      msg.className = "text-yellow-400 text-sm font-semibold";
+
+      const response = await fetch(`${API_BASE_URL}/api/help`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (spinner) spinner.classList.add("hidden");
+      submitBtn.disabled = false;
+
+      if (!response.ok) {
+        throw new Error(data.message || `Błąd serwera: ${response.status}`);
+      }
+
+      if (data.success && data.redirectUrl) {
+        window.location.href = data.redirectUrl;
+        return;
+      }
+
+      if (data.success) {
+        msg.textContent = "Zamówienie przyjęte. Dziękujemy!";
+        msg.className = "text-green-500 text-sm font-semibold";
+        setTimeout(() => {
+          document.getElementById("modal-overlay")?.classList.add("hidden");
+          msg.textContent = "";
+        }, 2000);
+        return;
+      }
+
+      throw new Error(data.message || "Nieoczekiwana odpowiedź serwera.");
+    } catch (err) {
+      console.error("Błąd w fetch /api/help:", err);
+      msg.textContent = "Wystąpił błąd podczas składania zamówienia.";
+      msg.className = "text-red-500 text-sm font-semibold";
+      const spinner = document.getElementById("spinner");
+      if (spinner) spinner.classList.add("hidden");
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+

@@ -1,0 +1,100 @@
+---
+//import ThemeToggle from './ThemeToggle.astro';
+---
+
+<nav class="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 relative">
+
+    <!-- Logo -->
+    <a href="/" class="inline-flex items-center gap-2 whitespace-nowrap z-10">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           class="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor"
+           stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="4" x2="12" y2="12" />
+        <circle cx="12" cy="14" r="8" />
+      </svg>
+      <span class="text-2xl font-extrabold text-white font-sans">
+        DAR<span class="text-yellow-400">NET24</span>
+      </span>
+    </a>
+
+    <!-- Hamburger (mobile) -->
+    <button id="mobile-toggle" class="md:hidden text-white z-10">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Menu desktop (centered) -->
+    <ul class="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-6 text-lg text-gray-800 dark:text-gray-200">
+      <li><a href="/" class="hover:underline">Start</a></li>
+      <li><a href="/o-nas" class="hover:underline">O nas</a></li>
+    
+      <!-- Dropdown Usługi -->
+      <li class="relative group">
+        <!-- Trigger -->
+        <a href="/uslugi"
+           class="inline-flex items-center gap-1 hover:underline"
+           aria-haspopup="true" aria-expanded="false">
+          Usługi <span aria-hidden="true">▾</span>
+        </a>
+      
+        <!-- Hover bridge: 8px strefy pod triggerem, żeby nie zerwać hovera -->
+        <span class="pointer-events-none absolute left-0 top-full h-2 w-full content-['']"></span>
+      
+        <!-- Dropdown -->
+        <ul
+          class="absolute left-0 top-full z-50 hidden min-w-[220px] rounded-lg bg-white text-gray-900 shadow-lg
+                 dark:bg-gray-800 dark:text-gray-100
+                 group-hover:block hover:block focus-within:block
+                 pointer-events-auto"
+          role="menu"
+        >
+          <li><a href="/uslugi/skladanie-komputerow" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Składanie komputerów</a></li>
+          <li><a href="/uslugi/okablowanie-sieci-lan" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Okablowanie sieci LAN</a></li>
+          <li><a href="/uslugi/obsluga-serwerow" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Obsługa serwerów</a></li>
+          <li><a href="/uslugi/programy-ksiegowe" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Oprogramowanie księgowe</a></li>
+        </ul>
+      </li>
+      
+    
+      <li><a href="/cennik" class="hover:underline">Cennik</a></li>
+      <li><a href="/obsluga-firm" class="hover:underline">Obsługa firm</a></li>
+      <li><a href="/pomoc-zdalna" class="hover:underline">Pomoc zdalna</a></li>
+      <li><a href="/kontakt" class="hover:underline">Kontakt</a></li>
+    </ul>
+
+    <!-- Motyw -->
+    <!-- <div class="hidden md:block z-10">
+      <ThemeToggle />
+    </div> -->
+  </div>
+
+<!-- Menu mobilne -->
+<div id="mobile-menu" class="md:hidden hidden flex-col px-6 py-4 space-y-4 bg-gray-900 text-white text-lg">
+  <a href="/" class="block hover:underline">Start</a>
+  <a href="/o-nas" class="block hover:underline">O nas</a>
+
+  <!-- Usługi rozwinięte wprost -->
+  <span class="font-semibold mt-2">Usługi:</span>
+  <a href="/uslugi/skladanie-komputerow" class="block hover:underline ml-4">Składanie komputerów</a>
+  <a href="/uslugi/okablowanie-sieci-lan" class="block hover:underline ml-4">Okablowanie sieci LAN</a>
+  <a href="/uslugi/obsluga-serwerow" class="block hover:underline ml-4">Obsługa serwerów</a>
+  <a href="/uslugi/programy-ksiegowe" class="block hover:underline ml-4">Oprogramowanie księgowe</a>
+
+  <a href="/cennik" class="block hover:underline">Cennik</a>
+  <a href="/obsluga-firm" class="block hover:underline">Obsługa firm</a>
+  <a href="/pomoc-zdalna" class="block hover:underline">Pomoc zdalna</a>
+  <a href="/kontakt" class="block hover:underline">Kontakt</a>
+</div>
+
+
+  <script is:inline>
+    const toggle = document.getElementById('mobile-toggle');
+    const menu = document.getElementById('mobile-menu');
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</nav>

@@ -1,0 +1,157 @@
+---
+import Layout     from '../layouts/Layout.astro';
+import Navbar     from '../components/Navbar.astro';
+import Footer     from '../components/Footer.astro';
+import ModalForm  from '../components/ModalForm.astro';
+
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json();
+
+const pomoc = cms.pomoc;
+if (!pomoc) {
+  throw new Error("Nie znaleziono sekcji 'pomoc' w CMS");
+}
+
+const {
+  title,
+  description,
+  heading,
+  subheading,
+  reasons = [],
+  pakiety = [],
+  howwork = [],
+} = pomoc;
+---
+
+<Layout title={title} description={description}>
+  <Navbar slot="navbar" />
+
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800">
+    <h1 class="text-4xl font-bold mb-4">{heading}</h1>
+    <p class="text-lg max-w-2xl mx-auto">{subheading}</p>
+  </section>
+
+  <!-- KOMUNIKATY (pokazywane przez JS) -->
+  <div id="success-alert" class="hidden bg-green-100 text-green-800 border border-green-400 p-4 rounded mb-6 max-w-3xl mx-auto text-center">
+    ✅ Dziękujemy! Płatność przebiegła pomyślnie. Skontaktujemy się z Tobą wkrótce.
+  </div>
+  <div id="error-alert" class="hidden bg-red-100 text-red-800 border border-red-400 p-4 rounded mb-6 max-w-3xl mx-auto text-center">
+    ❌ Wystąpił błąd podczas realizacji płatności. Spróbuj ponownie lub skontaktuj się z nami.
+  </div>
+
+  <section class="py-12 px-6 max-w-3xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-4">Dlaczego warto skorzystać?</h2>
+    <ul class="inline-block text-left space-y-2 text-gray-700 dark:text-gray-300">
+      {reasons.map(item => (
+        <li>✅ {item}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="py-16 px-6 bg-white dark:bg-gray-900">
+    <h2 class="text-3xl font-bold text-center mb-10">Wybierz pakiet</h2>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+      {pakiety.map(p => {
+        const [nettoLine, bruttoLine] = p.price.split('(');
+        return (
+          <div class="border p-6 rounded-lg shadow-md bg-white dark:bg-gray-800 text-center">
+            <h3 class="text-xl font-bold mb-2">{p.name}</h3>
+            <p class="mb-4 text-gray-700 dark:text-gray-300">{p.desc}</p>
+            <p class="text-2xl font-semibold text-yellow-400 mb-1">{nettoLine?.trim()}</p>
+            {bruttoLine && <p class="text-white text-base">({bruttoLine.trim()}</p>}
+            <button
+              class="kup-btn bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded transition mt-4"
+              onclick={`pokazFormularz('${p.name}', '${p.price.replace(/\D/g, '')}')`}
+            >
+              Kup teraz
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="py-8 px-6 bg-white dark:bg-gray-900 text-center">
+    <p class="text-lg mb-4">
+      Do połączenia używamy AnyDesk – pobierz narzędzie i podaj nam swój ID:
+    </p>
+    <a
+      href="https://my.anydesk.com/v2/api/v2/custom-clients/downloads/public/FEQJJBGSPYUC/Pomoc-zdalna-DARNET24.exe"
+      target="_blank"
+      rel="noopener"
+      class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition"
+    >
+      Pobierz AnyDesk
+    </a>
+  </section>
+
+  <section class="py-16 px-6 bg-gray-800 text-white">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-center mb-6">Jak to działa?</h2>
+      <ul class="list-disc list-inside space-y-3 text-left">
+        {howwork.map(item => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div
+    id="modal-overlay"
+    class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center hidden z-50"
+    onclick="if (event.target.id === 'modal-overlay') document.getElementById('modal-overlay').classList.add('hidden')"
+  >
+    <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-lg p-8 shadow-xl">
+      <button
+        onClick="document.getElementById('modal-overlay').classList.add('hidden')"
+        class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white"
+      >
+        &times;
+      </button>
+      <h2 class="text-2xl font-bold mb-4 text-white">Zamów pomoc zdalną</h2>
+
+      <div class="mb-4 text-center">
+        <a
+          href="https://my.anydesk.com/v2/api/v2/custom-clients/downloads/public/FEQJJBGSPYUC/Pomoc-zdalna-DARNET24.exe"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+        >
+          Pobierz AnyDesk
+        </a>
+      </div>
+
+      <ModalForm />
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+
+  <!-- JS – modal + komunikaty -->
+  <script is:inline>
+    function pokazFormularz(pakiet, cena) {
+      document.getElementById("modal-overlay").classList.remove("hidden");
+      const nameInput  = document.querySelector("input[name='packageName']");
+      const priceInput = document.querySelector("input[name='amount']");
+      if (nameInput)  nameInput.value = pakiet;
+      if (priceInput) priceInput.value = cena;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("success") === "1") {
+        document.getElementById("success-alert")?.classList.remove("hidden");
+      }
+      if (url.searchParams.get("error") === "1") {
+        document.getElementById("error-alert")?.classList.remove("hidden");
+      }
+    });
+  </script>
+</Layout>

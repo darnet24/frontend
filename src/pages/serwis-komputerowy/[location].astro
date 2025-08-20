@@ -1,0 +1,110 @@
+---
+import { Astro } from "astro";
+import Layout from "../../layouts/Layout.astro";
+
+/**
+ * getStaticPaths – buduje listę slugów na podstawie danych z backendu
+ */
+export async function getStaticPaths() {
+  const BACKEND_URL =
+    import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+  // Pobranie pełnego CMS JSON-a z backendu
+  const res = await fetch(`${BACKEND_URL}/api/cms-content`);
+  if (!res.ok) {
+    throw new Error(`Błąd w getStaticPaths: ${res.status}`);
+  }
+  const cms = await res.json();
+
+  // locationsDetails to obiekt, klucze to slug (np. "warszawa")
+  const detailsObj = cms.locationsDetails || {};
+  const slugs = Object.keys(detailsObj);
+
+  return slugs.map((slug) => ({
+    params: { location: slug },
+  }));
+}
+
+// -------------------------------------------------------------
+// Teraz front‐matter dla każdej ścieżki [location] (np. /serwis-komputerowy/warszawa)
+// -------------------------------------------------------------
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+
+// 1) Pobieramy całe cms-content.json
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json();
+
+// 2) Obiekt, w którym klucze to slug, a wartości to detale
+const detailsObj = cms.locationsDetails || {};
+
+// 3) Odczytujemy parametr dynamiczny [location] z URL-a
+const { location } = Astro.params;
+
+// 4) Wyciągamy obiekt `place` (jeśli nie ma, rzucamy błąd 404)
+const place = detailsObj[location];
+if (!place) {
+  throw new Error(`Nie znaleziono lokalizacji: ${location}`);
+}
+
+// 5) Przygotowujemy wartości SEO
+const pageTitle = place.title || place.heading;
+const pageDescription = place.description || `Serwis komputerowy w ${location}`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- HERO -->
+  <section class="py-20 px-6 bg-gray-800 text-center text-white">
+    <h1 class="text-4xl font-bold mb-4">{place.heading}</h1>
+    <p class="text-lg max-w-3xl mx-auto text-gray-300">{place.intro}</p>
+  </section>
+
+  <!-- NASZE USŁUGI -->
+  {place.points && (
+    <section class="py-16 px-6 max-w-5xl mx-auto">
+  <h2 class="text-2xl font-bold mb-6 text-center text-white">
+    Nasze usługi w {place.heading.split("–")[1].trim()}
+  </h2>
+
+  <!-- Kontener z paddingiem od lewej -->
+  <div class="pl-8 md:pl-16 lg:pl-20">
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-200 list-disc list-inside">
+      {place.points.map((point) => (
+        <li>{point}</li>
+      ))}
+      {place.points.length % 2 !== 0 && (
+        <li class="invisible">placeholder</li>
+      )}
+    </ul>
+  </div>
+</section>
+  )}
+
+  <!-- LOKALNIE -->
+  {place.localityIntro && (
+    <section class="py-16 px-6 bg-gray-800 text-center text-white">
+      <h2 class="text-2xl font-bold mb-4">
+        Działamy lokalnie – {place.heading.split("–")[1].trim()} i okolice
+      </h2>
+      <p class="max-w-2xl mx-auto text-gray-300">{place.localityIntro}</p>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">
+      Umów wizytę lub zapytaj o wycenę
+    </h2>
+    <p class="mb-6">
+      Zadzwoń do nas lub skorzystaj z formularza kontaktowego – odpowiadamy szybko.
+    </p>
+    <a
+      href="/kontakt"
+      class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition"
+    >
+      Skontaktuj się
+    </a>
+  </section>
+</Layout>

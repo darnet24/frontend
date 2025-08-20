@@ -1,0 +1,40 @@
+---
+import CookieBanner from './CookieBanner.astro';
+---
+<footer class="bg-gray-900 text-gray-300 px-6 pt-10 pb-6 text-sm">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left md:text-center">
+
+    <!-- Firma -->
+    <div class="flex flex-col items-start md:items-center">
+      <h2 class="text-white font-bold mb-2">Darnet24</h2>
+      <p class="text-sm leading-relaxed text-gray-400">Profesjonalne usługi IT — serwis, sieci, backup, wsparcie zdalne.</p>
+      <p class="mt-2 text-sm text-gray-400">ul. Tadeusza Kościuszki 29<br />02-495 Warszawa</p>
+    </div>
+
+    <!-- Kontakt -->
+    <div class="flex flex-col items-start md:items-center">
+      <h2 class="text-white font-bold mb-2">Kontakt</h2>
+      <p class="flex items-center gap-2 text-white">
+        📞 <a href="https://wa.me/48509621580" class="hover:underline text-white">+48 509 621 580</a>
+      </p>
+      <p class="flex items-center gap-2 mt-1">
+        ✉️ <a href="mailto:kontakt@darnet24.pl" class="hover:underline text-white">kontakt@darnet24.pl</a>
+      </p>
+    </div>
+
+  
+    <!-- Social -->
+    <div class="flex flex-col items-start md:items-center">
+      <h2 class="text-white font-bold mb-2">Social</h2>
+      <ul class="space-y-1">
+        <li><a href="https://www.facebook.com/DARNET24" class="hover:underline">Facebook</a></li>
+        <li><a href="https://www.instagram.com/darnet24/" class="hover:underline">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="text-center text-xs text-gray-500 mt-10">
+    &copy; {new Date().getFullYear()} DARNET24. Wszelkie prawa zastrzeżone.
+  </div>
+  <CookieBanner />
+</footer>

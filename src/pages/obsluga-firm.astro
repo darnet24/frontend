@@ -1,0 +1,140 @@
+---
+import Layout from "../layouts/Layout.astro";
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json();
+
+// Wyciągamy sekcję "firmy"
+const firmy = cms.firmy;
+if (!firmy) {
+  throw new Error("Nie znaleziono sekcji 'firmy' w CMS");
+}
+---
+
+<Layout title={firmy.title} description={firmy.description}>
+
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <h1 class="text-4xl font-bold mb-4">{firmy.heading}</h1>
+    <p class="text-lg max-w-3xl mx-auto">{firmy.intro}</p>
+  </section>
+
+  <!-- NASZE ROZWIĄZANIA -->
+  <section class="py-16 px-6 max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-6">{firmy.solutionsHeading}</h2>
+    <div class="grid gap-8 md:grid-cols-2 text-lg text-gray-700 dark:text-gray-300">
+      {firmy.oferta.map((item, idx) => (
+        <div class="flex items-start gap-3" key={idx}>
+          <span class="mt-1 text-yellow-400">•</span>
+          <p set:html={item}></p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="w-full overflow-hidden leading-[0]">
+    <svg class="relative block w-[150%] h-12 -mt-1 fill-white dark:fill-gray-900" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V46.29c47.42,22,94.83,34.67,142.25,38C267.37,93.2,334.28,4.93,428.32,4.46c84.43-.41,129.53,74.09,217,90.23,104.72,19.19,172.61-50.46,275.87-53.83,70.42-2.28,127.7,26.47,186.81,43.2V0Z"/>
+    </svg>
+  </div>
+
+  <!-- DLACZEGO WARTO NAS WYBRAĆ -->
+  <section class="py-16 px-6 bg-gray-50 dark:bg-gray-800">
+    <h2 class="text-3xl font-bold text-center mb-6">{firmy.benefitsHeading}</h2>
+    <ul class="max-w-4xl mx-auto grid gap-4 md:grid-cols-2 list-none text-gray-700 dark:text-gray-300">
+      {firmy.zalety.map((tekst, idx) => (
+        <li class="flex items-start gap-3" key={idx}>
+          <strong class="text-yellow-400">✔</strong><span>{tekst}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- PAKIETY -->
+  <section class="py-16 px-6 bg-gray-50 dark:bg-gray-800">
+    <h2 class="text-3xl font-bold text-center mb-10">{firmy.packagesHeading}</h2>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+      {firmy.pakiety.map((p, idx) => (
+        <div
+          class="border p-6 rounded-lg shadow-md bg-white dark:bg-gray-900 text-center flex flex-col justify-between h-full min-h-[460px]"
+          key={idx}
+        >
+          <h3 class="text-2xl font-bold mb-4">{p.name}</h3>
+          <ul class="text-left list-disc list-inside mb-6 text-gray-700 dark:text-gray-300 space-y-1">
+            {p.features.map((f, i) => <li key={i}>{f}</li>)}
+          </ul>
+          <p class="text-3xl font-extrabold text-yellow-400 mb-4">{p.price}</p>
+          <!-- use plain onclick attributes -->
+          <button
+            class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-4 rounded transition"
+            onclick="window.location.href='/kontakt'"
+          >
+            {p.price === 'indywidualna wycena' ? firmy.quoteButton : firmy.contactButton}
+          </button>
+        </div>
+      ))}
+    </div>
+     <!-- BACKUP SEKJA KLIENTA - NOWA WERSJA -->
+     <!-- BACKUP SEKJA -->
+    <div class="mt-20 max-w-6xl mx-auto">
+      <h3 class="text-3xl font-bold text-center mb-10">{firmy.backupsHeading}</h3>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4 text-center">
+        {firmy.backups.map((b, idx) => (
+          <div class="bg-white dark:bg-gray-900 border rounded-lg p-6 shadow" key={idx}>
+            <h4 class="text-xl font-bold mb-2">{b.name}</h4>
+            <p class="mb-2 text-sm text-gray-500">{b.desc}</p>
+            <p class="text-yellow-400 font-extrabold text-xl">{b.price}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-10 text-sm text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+        <p class="italic mb-4 text-center">{firmy.backupNote}</p>
+        <p class="font-semibold mb-2">Dlaczego warto?</p>
+        <ul class="list-disc list-inside space-y-2">
+          {firmy.backupBenefits.map((ben, idx) => (
+            <li key={idx}>{ben}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="w-full overflow-hidden leading-[0]">
+    <svg class="relative block w-[150%] h-12 -mt-1 fill-gray-50 dark:fill-gray-800" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M1200 0L0 0 0 46.29c47.42 22 94.83 34.67 142.25 38 125.12 1.49 192.03-83.78 286.07-84.25 84.43-.41 129.53 74.09 217 90.23 104.72 19.19 172.61-50.46 275.87-53.83 70.42-2.28 127.7 26.47 186.81 43.2V0z"/>
+    </svg>
+  </div>
+
+  <!-- PODSUMOWANIE -->
+  <section class="py-16 px-6 bg-gray-100 dark:bg-gray-800">
+    <h2 class="text-2xl font-bold mb-6 text-center">{firmy.summaryHeading}</h2>
+    <ul class="list-disc list-inside space-y-3 text-gray-700 dark:text-gray-300 max-w-xl mx-auto">
+      {firmy.summaryList.map((item, idx) => (
+        <li key={idx} set:html={item}></li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="w-full overflow-hidden leading-[0]">
+    <svg class="relative block w-[150%] h-12 -mt-1 fill-gray-100 dark:fill-gray-800" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,0V46.29c47.42,22,94.83,34.67,142.25,38C267.37,93.2,334.28,4.93,428.32,4.46c84.43-.41,129.53,74.09,217,90.23,104.72,19.19,172.61-50.46,275.87-53.83,70.42-2.28,127.7,26.47,186.81,43.2V0Z"/>
+    </svg>
+  </div>
+
+  <!-- CTA -->
+  <section class="text-center py-16 bg-yellow-400 text-black">
+    <h2 class="text-2xl font-bold mb-4">{firmy.ctaHeading}</h2>
+    <p class="mb-6 max-w-xl mx-auto">{firmy.ctaText}</p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">
+      {firmy.ctaButton}
+    </a>
+  </section>
+
+</Layout>

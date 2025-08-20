@@ -1,0 +1,53 @@
+---
+// src/pages/newsletter-unsubscribe.astro
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Wypisz się z newslettera" description="Zarządzaj subskrypcją newslettera Darnet24.">
+  <section class="py-20 px-4 max-w-xl mx-auto text-center">
+    <h1 class="text-3xl font-bold mb-6">Wypisz się z newslettera</h1>
+
+    <div id="unsubscribe-result" class="text-lg font-semibold text-yellow-600">
+      Trwa przetwarzanie żądania...
+    </div>
+
+    <p class="mt-6 text-sm text-gray-600">
+      Jeśli chcesz zapisać się ponownie, odwiedź naszą stronę główną lub <a href="/" class="underline text-blue-600 hover:text-blue-500">skontaktuj się z nami</a>.
+    </p>
+  </section>
+
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get("token");
+      const resultEl = document.getElementById("unsubscribe-result");
+
+      if (!token) {
+        resultEl.textContent = "Błąd: Brak tokenu do wypisu.";
+        resultEl.className = "text-red-600 text-lg font-semibold";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL}/api/newsletter/unsubscribe`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          resultEl.textContent = "Zostałeś wypisany z newslettera.";
+          resultEl.className = "text-green-600 text-lg font-semibold";
+        } else {
+          resultEl.textContent = "Nie udało się wypisać: " + (data.message || "Nieznany błąd.");
+          resultEl.className = "text-red-600 text-lg font-semibold";
+        }
+      } catch (err) {
+        resultEl.textContent = "Wystąpił błąd sieci.";
+        resultEl.className = "text-red-600 text-lg font-semibold";
+      }
+    });
+  </script>
+</Layout>

@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const title = "Potwierdzenie zamówienia";
+const description = "Potwierdzenie zamówienia pomocy zdalnej na darnet24.pl";
+---
+
+<Layout title={title} description={description}>
+  <Navbar slot="navbar" />
+
+  <main class="min-h-[60vh] flex items-center justify-center px-6 py-20 bg-white dark:bg-gray-900 text-center">
+    <div class="max-w-xl w-full">
+      <h1 class="text-4xl font-bold mb-4 text-green-500">Dziękujemy za zamówienie!</h1>
+      <p class="text-lg mb-6 text-gray-800 dark:text-gray-300">
+        Twoje zgłoszenie zostało zapisane. Oczekuj kontaktu ze strony naszego zespołu.
+      </p>
+      <a
+        href="/"
+        class="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-6 rounded transition"
+      >
+        Wróć do strony głównej
+      </a>
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</Layout>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+    const email = params.get("email");
+    const phone = params.get("phone");
+    const packageName = params.get("packageName");
+    const amount = params.get("amount");
+
+    if (name && email && phone && packageName && amount) {
+      fetch("/api/remote-support", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, phone, packageName, amount }),
+      }).catch(() => {
+        console.error("Nie udało się zapisać danych na backendzie.");
+      });
+    }
+  });
+</script>

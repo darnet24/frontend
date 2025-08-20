@@ -1,0 +1,416 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Podmień/uzupełnij listę zdjęć – ścieżki względem /public
+const gallery = [
+  { full: "/images/skladanie/1.webp",  thumb360: "/images/skladanie/thumbs/1-360.webp",  thumb720: "/images/skladanie/thumbs/1-720.webp",  alt: "Komputer z chłodzeniem powietrznym i podświetleniem RGB (wentylatory fioletowe)" },
+  { full: "/images/skladanie/2.webp",  thumb360: "/images/skladanie/thumbs/2-360.webp",  thumb720: "/images/skladanie/thumbs/2-720.webp",  alt: "Obudowa PC z zielonymi wentylatorami RGB" },
+  { full: "/images/skladanie/3.webp",  thumb360: "/images/skladanie/thumbs/3-360.webp",  thumb720: "/images/skladanie/thumbs/3-720.webp",  alt: "Komputer z kartą graficzną Logic i podświetleniem RGB" },
+  { full: "/images/skladanie/4.webp",  thumb360: "/images/skladanie/thumbs/4-360.webp",  thumb720: "/images/skladanie/thumbs/4-720.webp",  alt: "Komputer z trzema wentylatorami RGB na froncie obudowy" },
+  { full: "/images/skladanie/5.webp",  thumb360: "/images/skladanie/thumbs/5-360.webp",  thumb720: "/images/skladanie/thumbs/5-720.webp",  alt: "Obudowa z pełnym zestawem wentylatorów RGB i kartą graficzną" },
+  { full: "/images/skladanie/6.webp",  thumb360: "/images/skladanie/thumbs/6-360.webp",  thumb720: "/images/skladanie/thumbs/6-720.webp",  alt: "Komputer z dużym chłodzeniem procesora i podświetleniem LED" },
+  { full: "/images/skladanie/7.webp",  thumb360: "/images/skladanie/thumbs/7-360.webp",  thumb720: "/images/skladanie/thumbs/7-720.webp",  alt: "Obudowa z frontem siatkowym i fioletowym podświetleniem" },
+  { full: "/images/skladanie/8.webp",  thumb360: "/images/skladanie/thumbs/8-360.webp",  thumb720: "/images/skladanie/thumbs/8-720.webp",  alt: "Obudowa z dużym wentylatorem RGB na froncie" },
+  { full: "/images/skladanie/9.webp",  thumb360: "/images/skladanie/thumbs/9-360.webp",  thumb720: "/images/skladanie/thumbs/9-720.webp",  alt: "Komputer PC z chłodzeniem powietrznym i wentylatorami RGB" },
+  { full: "/images/skladanie/10.webp", thumb360: "/images/skladanie/thumbs/10-360.webp", thumb720: "/images/skladanie/thumbs/10-720.webp", alt: "Zbliżenie na kartę graficzną MSI GeForce RTX" },
+  { full: "/images/skladanie/11.webp", thumb360: "/images/skladanie/thumbs/11-360.webp", thumb720: "/images/skladanie/thumbs/11-720.webp", alt: "Obudowa z pojedynczym wentylatorem RGB" },
+  { full: "/images/skladanie/12.webp", thumb360: "/images/skladanie/thumbs/12-360.webp", thumb720: "/images/skladanie/thumbs/12-720.webp", alt: "Komputer z chłodzeniem wodnym i podświetleniem fioletowym" },
+  { full: "/images/skladanie/13.webp", thumb360: "/images/skladanie/thumbs/13-360.webp", thumb720: "/images/skladanie/thumbs/13-720.webp", alt: "Obudowa z dużym frontowym wentylatorem RGB" },
+  { full: "/images/skladanie/14.webp", thumb360: "/images/skladanie/thumbs/14-360.webp", thumb720: "/images/skladanie/thumbs/14-720.webp", alt: "Podświetlenie RGB zielono-niebieskie w środku komputera" },
+  { full: "/images/skladanie/15.webp", thumb360: "/images/skladanie/thumbs/15-360.webp", thumb720: "/images/skladanie/thumbs/15-720.webp", alt: "Komputer z chłodzeniem wodnym i podświetleniem niebieskim" },
+  { full: "/images/skladanie/16.webp", thumb360: "/images/skladanie/thumbs/16-360.webp", thumb720: "/images/skladanie/thumbs/16-720.webp", alt: "Widok z boku – komputer z wentylatorami RGB" },
+  { full: "/images/skladanie/17.webp", thumb360: "/images/skladanie/thumbs/17-360.webp", thumb720: "/images/skladanie/thumbs/17-720.webp", alt: "Zabudowany PC z trzema wentylatorami RGB na froncie" },
+  { full: "/images/skladanie/18.webp", thumb360: "/images/skladanie/thumbs/18-360.webp", thumb720: "/images/skladanie/thumbs/18-720.webp", alt: "Podświetlenie wnętrza komputera z niebieskimi diodami LED" },
+  { full: "/images/skladanie/19.webp", thumb360: "/images/skladanie/thumbs/19-360.webp", thumb720: "/images/skladanie/thumbs/19-720.webp", alt: "Zbliżenie na chłodzenie procesora z logiem MSI" },
+  { full: "/images/skladanie/20.webp", thumb360: "/images/skladanie/thumbs/20-360.webp", thumb720: "/images/skladanie/thumbs/20-720.webp", alt: "Obudowa komputerowa z fioletowym paskiem LED" },
+  { full: "/images/skladanie/21.webp", thumb360: "/images/skladanie/thumbs/21-360.webp", thumb720: "/images/skladanie/thumbs/21-720.webp", alt: "Komputer z bocznym szkłem hartowanym i niebieskim podświetleniem" },
+  { full: "/images/skladanie/22.webp", thumb360: "/images/skladanie/thumbs/22-360.webp", thumb720: "/images/skladanie/thumbs/22-720.webp", alt: "Obudowa z dużym pojedynczym wentylatorem RGB" },
+  { full: "/images/skladanie/23.webp", thumb360: "/images/skladanie/thumbs/23-360.webp", thumb720: "/images/skladanie/thumbs/23-720.webp", alt: "Podświetlone wnętrze komputera w ciemnym otoczeniu" },
+  { full: "/images/skladanie/24.webp", thumb360: "/images/skladanie/thumbs/24-360.webp", thumb720: "/images/skladanie/thumbs/24-720.webp", alt: "Widok z boku – chłodzenie procesora i wentylatory RGB" },
+  { full: "/images/skladanie/25.webp", thumb360: "/images/skladanie/thumbs/25-360.webp", thumb720: "/images/skladanie/thumbs/25-720.webp", alt: "Komputer z podświetlonym chłodzeniem wodnym i wentylatorami" },
+  { full: "/images/skladanie/26.webp", thumb360: "/images/skladanie/thumbs/26-360.webp", thumb720: "/images/skladanie/thumbs/26-720.webp", alt: "Obudowa z trzema dużymi frontowymi wentylatorami RGB" },
+  { full: "/images/skladanie/27.webp", thumb360: "/images/skladanie/thumbs/27-360.webp", thumb720: "/images/skladanie/thumbs/27-720.webp", alt: "Komputer gamingowy z siatkowym frontem i RGB" },
+  { full: "/images/skladanie/28.webp", thumb360: "/images/skladanie/thumbs/28-360.webp", thumb720: "/images/skladanie/thumbs/28-720.webp", alt: "Wnętrze komputera z chłodzeniem wodnym i wentylatorami" },
+  { full: "/images/skladanie/29.webp", thumb360: "/images/skladanie/thumbs/29-360.webp", thumb720: "/images/skladanie/thumbs/29-720.webp", alt: "Obudowa z trzema frontowymi wentylatorami w trybie tęczy RGB" },
+  { full: "/images/skladanie/30.webp", thumb360: "/images/skladanie/thumbs/30-360.webp", thumb720: "/images/skladanie/thumbs/30-720.webp", alt: "Obudowa z pionowymi trzema wentylatorami RGB" },
+  { full: "/images/skladanie/31.webp", thumb360: "/images/skladanie/thumbs/31-360.webp", thumb720: "/images/skladanie/thumbs/31-720.webp", alt: "Obudowa komputerowa w kolorze białym z panelem bocznym ze szkła" },
+  { full: "/images/skladanie/32.webp", thumb360: "/images/skladanie/thumbs/32-360.webp", thumb720: "/images/skladanie/thumbs/32-720.webp", alt: "Obudowa z panelem frontowym w drewnianym stylu" },
+  { full: "/images/skladanie/33.webp", thumb360: "/images/skladanie/thumbs/33-360.webp", thumb720: "/images/skladanie/thumbs/33-720.webp", alt: "Obudowa PC z zielonym chłodzeniem i szkłem hartowanym" },
+  { full: "/images/skladanie/34.webp", thumb360: "/images/skladanie/thumbs/34-360.webp", thumb720: "/images/skladanie/thumbs/34-720.webp", alt: "Komputer z dwoma dużymi wentylatorami RGB z tyłu" }
+];
+
+
+
+---
+
+<Layout
+  title="Profesjonalne składanie komputerów – doradztwo, montaż, testy | Darnet24"
+  description="Składamy komputery pod Twój cel: biuro, gry, projektowanie, photo/video, CAD, serwery NAS. Doradztwo pod budżet, montaż, okablowanie, undervolting, testy i optymalizacja. Odbiór lub dostawa, gwarancja i wsparcie."
+>
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <h1 class="text-4xl font-bold mb-4">Profesjonalne sładanie komputeów</h1>
+    <p class="text-lg max-w-3xl mx-auto">
+      Dobieramy podzespoły pod Twój budżet i zastosowanie. Cichy montaż, estetyczne okablowanie, testy stabilności i gwarancja.
+    </p>
+    <div class="mt-8">
+      <a href="/kontakt" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded transition">
+        Wyceń zestaw
+      </a>
+    </div>
+  </section>
+
+  <!-- ZAKRES USŁUG -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Co robimy</h2>
+    <div class="grid gap-8 md:grid-cols-2 text-gray-200">
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Doradztwo i konfiguracja</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Dobór CPU/GPU/RAM/chłodzenia pod gry, biuro, CAD, foto/wideo, AI/ML</li>
+          <li>Kompatybilność i balans (zasilacz, sekcja VRM, obudowa, airflow)</li>
+          <li>Wersje ciche/kompaktowe/energooszczędne (undervolting)</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Montaż i optymalizacja</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Estetyczne prowadzenie kabli i zarządzanie airflow</li>
+          <li>Aktualizacja BIOS/UEFI, XMP/EXPO, profil wentylatorów</li>
+          <li>Montaż AIO/air, pasta termiczna premium, ciche profile</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">System i oprogramowanie</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Instalacja Windows/Linux, sterowniki, aktualizacje</li>
+          <li>Konfiguracja aplikacji i zabezpieczeń</li>
+          <li>Klonowanie/migracja danych ze starego PC</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Testy i dokumentacja</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Testy stabilności CPU/GPU/RAM, monitoring temperatur i hałasu</li>
+          <li>Benchmarki i raport końcowy (zrzuty, wyniki)</li>
+          <li>Gwarancja montażu + wsparcie posprzedażowe</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCES -->
+  <section class="py-16 px-6 bg-gray-800">
+    <div class="max-w-5xl mx-auto text-white">
+      <h2 class="text-3xl font-bold text-center mb-10">Jak to przebiega</h2>
+      <ol class="grid md:grid-cols-4 gap-6 text-center">
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">1</span>
+          <p class="mt-3">Króty brief: budżet i zastosowanie</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">2</span>
+          <p class="mt-3">Propozycja konfiguracji + wycena</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">3</span>
+          <p class="mt-3">Montaż, system, testy i optymalizacja</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">4</span>
+          <p class="mt-3">Odbiór lub dostawa + raport i gwarancja</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PRZYKŁADOWE WYCENY -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Przykładowe pakiety montażu</h2>
+    <div class="grid gap-8 md:grid-cols-3">
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Standard</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">299–399 zł</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Montaż + okablowanie</li>
+          <li>Instalacja systemu i sterowników</li>
+          <li>Krótki test stabilności</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Performance</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">499–699 zł</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Zaawansowane okablowanie i airflow</li>
+          <li>Profil wentylatorów, XMP/EXPO</li>
+          <li>Testy CPU/GPU/RAM + raport</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Workstation</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">799–1299 zł</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Montaż AIO/air premium</li>
+          <li>Undervolting/opt. kultury pracy</li>
+          <li>Pełny stress test + dokumentacja</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-sm text-gray-400 mt-6 text-center">
+      Wszystkie podane ceny są cenami netto (nie zawierają podatku VAT).
+    </p>
+  </section>
+
+<!-- GALERIA – miniatury -->
+<section class="py-16 px-6 bg-gray-800">
+  <h2 class="text-3xl font-bold text-center mb-10 text-white">Realizacje / galeria</h2>
+
+  {gallery.length ? (
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+      {gallery.map((img, i) => (
+        <figure class="rounded-xl overflow-hidden bg-gray-700">
+          <button
+            type="button"
+            class="block w-full aspect-[4/3] focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            data-gallery-item
+            data-index={i}
+            data-full={img.full}            
+            data-alt={img.alt}
+            aria-label={`Powiększ obraz ${i + 1} z ${gallery.length}`}
+          >
+            <img
+              src={img.thumb360}
+              srcset={`${img.thumb360} 360w, ${img.thumb720} 720w`}
+              sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw"
+              alt={img.alt}
+              loading="lazy"
+              decoding="async"
+              width="720" height="540"   
+              class="w-full h-full object-cover"
+              fetchpriority="low"
+            />
+          </button>
+        </figure>
+      ))}
+    </div>
+  ) : (
+    <p class="text-center text-gray-300">
+      Dodaj zdjęcia do <code>/public/images/skladanie/</code>, aby wyświetlić galerię.
+    </p>
+  )}
+</section>
+  
+<!-- LIGHTBOX -->
+<div id="lightbox" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/90 p-4 touch-none select-none" aria-hidden="true" role="dialog" aria-modal="true">
+  <button id="lb-backdrop" class="absolute inset-0" aria-label="Zamknij podgląd"></button>
+  <div class="relative max-w-6xl w-full flex flex-col items-center">
+    <img id="lb-img" src="" alt="Podgląd zdjęcia" class="max-h-[80vh] w-auto rounded-xl shadow-2xl mx-auto pointer-events-none" draggable="false" />
+    <figcaption id="lb-caption" class="mt-4 text-center text-sm text-white/90"></figcaption>
+    <button id="lb-prev" class="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white text-2xl" aria-label="Poprzednie">&#10094;</button>
+    <button id="lb-next" class="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white text-2xl" aria-label="Następne">&#10095;</button>
+    <button
+      id="lb-close"
+      class="absolute top-6 right-6 z-50 grid place-items-center w-11 h-11 rounded-full
+            border-2 border-white bg-black/60 hover:bg-black/40 transition-colors duration-200
+            backdrop-blur-sm shadow-lg"
+      aria-label="Zamknij"
+    >
+      <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+    <div id="lb-counter" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-white/80"></div>
+  </div>
+</div>
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 max-w-4xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center text-white">FAQ</h2>
+    <div class="space-y-4">
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy mogę dostarczyć własne podzespoły?</summary>
+        <div class="mt-2">Tak, montujemy również z części klienta. Sprawdzimy kompatybilność i damy rekomendacje.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Jak długo trwa złożenie i testy?</summary>
+        <div class="mt-2">Zwykle 1–3 dni robocze, zależnie od dostępności części i zakresu testów.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy konfigurujecie oprogramowanie?</summary>
+        <div class="mt-2">Tak, instalujemy system, sterowniki, aktualizacje i podstawowe aplikacje. Możliwa migracja danych.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Chcesz cichy i wydajny zestaw?</h2>
+    <p class="mb-6">Przyślij budżet i zastosowanie – przygotujemy konfigurację i wycenę.</p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">Skontaktuj się</a>
+  </section>
+
+  <!-- JSON-LD: Service -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Profesjonalne składanie komputerów",
+    "provider": { "@type": "LocalBusiness", "name": "Darnet24" },
+    "areaServed": "Polska",
+    "serviceType": "PC build",
+    "url": "/uslugi/skladanie-komputerow",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "PLN",
+      "lowPrice": "299",
+      "highPrice": "1299"
+    }
+  })}></script>
+<script is:inline>
+  const items = Array.from(document.querySelectorAll('[data-gallery-item]'));
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbPrev = document.getElementById('lb-prev');
+  const lbNext = document.getElementById('lb-next');
+  const lbClose = document.getElementById('lb-close');
+  const lbBackdrop = document.getElementById('lb-backdrop');
+  const lbCounter = document.getElementById('lb-counter');
+  const lbCaption = document.getElementById('lb-caption');
+
+  const slides = items.map((el, i) => ({
+    full: el.dataset.full,                 // DUŻE ŹRÓDŁO
+    alt: el.dataset.alt || `Zdjęcie ${i + 1}`
+  })).filter(s => s.full);
+
+  let idx = 0, lastFocused = null;
+
+  function render(i) {
+    idx = (i + slides.length) % slides.length;
+    const s = slides[idx];
+    // pełny plik ładowany dopiero w lightboxie
+    lbImg.src = s.full;
+    lbImg.alt = s.alt;
+    lbCaption.textContent = s.alt;
+    lbCounter.textContent = `${idx + 1} / ${slides.length}`;
+
+    // preload tylko sąsiadów (po otwarciu)
+    const p = new Image(); p.src = slides[(idx - 1 + slides.length) % slides.length].full;
+    const n = new Image(); n.src = slides[(idx + 1) % slides.length].full;
+  }
+
+  function open(i) {
+    lastFocused = document.activeElement;
+    render(i);
+    lb.classList.remove('hidden');
+    lb.setAttribute('aria-hidden', 'false');
+    lbClose.focus();
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    lb.classList.add('hidden');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lastFocused?.focus?.();
+  }
+
+  items.forEach((btn, i) => btn.addEventListener('click', () => open(i)));
+  lbPrev.addEventListener('click', () => render(idx - 1));
+  lbNext.addEventListener('click', () => render(idx + 1));
+  lbClose.addEventListener('click', close);
+  lbBackdrop.addEventListener('click', close);
+  window.addEventListener('keydown', (e) => {
+    if (lb.classList.contains('hidden')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') render(idx - 1);
+    if (e.key === 'ArrowRight') render(idx + 1);
+  }, { passive: true });
+</script>
+<script is:inline>
+  (() => {
+    const overlay = document.getElementById('lightbox');
+    const img     = document.getElementById('lb-img');
+    const prevBtn = document.getElementById('lb-prev');
+    const nextBtn = document.getElementById('lb-next');
+    const closeBtn= document.getElementById('lb-close');
+  
+    let startX = 0, startY = 0, dx = 0, dy = 0, dragging = false;
+  
+    const H_THRESHOLD = 60;   // ile pikseli w poziomie, by zmienić slajd
+    const V_CLOSE      = 100; // ile w pionie, by zamknąć
+  
+    function getPoint(e){
+      if (e.touches && e.touches[0]) return e.touches[0];
+      if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0];
+      return e;
+    }
+  
+    function onStart(e){
+      const p = getPoint(e);
+      startX = p.clientX;
+      startY = p.clientY;
+      dx = 0; dy = 0;
+      dragging = true;
+      img.style.transition = 'none';
+    }
+  
+    function onMove(e){
+      if (!dragging) return;
+      const p = getPoint(e);
+      dx = p.clientX - startX;
+      dy = p.clientY - startY;
+  
+      // jeżeli ruch poziomy dominuje – blokujemy przewijanie strony
+      if (Math.abs(dx) > Math.abs(dy)) e.preventDefault();
+  
+      // subtelna animacja przesuwania i wygaszania
+      img.style.transform = `translateX(${dx}px)`;
+      img.style.opacity   = String(Math.max(0.4, 1 - Math.abs(dx) / 400));
+    }
+  
+    function resetAnim(){
+      img.style.transition = 'transform .18s ease, opacity .18s ease';
+      img.style.transform  = '';
+      img.style.opacity    = '';
+    }
+  
+    function onEnd(){
+      if (!dragging) return;
+      dragging = false;
+  
+      // zmiana zdjęcia
+      if (dx > H_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        resetAnim();
+        prevBtn?.click();
+        return;
+      }
+      if (dx < -H_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        resetAnim();
+        nextBtn?.click();
+        return;
+      }
+  
+      // zamknięcie w dół
+      if (dy > V_CLOSE && Math.abs(dy) > Math.abs(dx)) {
+        resetAnim();
+        closeBtn?.click();
+        return;
+      }
+  
+      // brak akcji – wróć
+      resetAnim();
+    }
+  
+    // Obsługa touch + pointer (Safari/Chrome/Firefox)
+    overlay.addEventListener('touchstart', onStart, { passive: true });
+    overlay.addEventListener('touchmove',  onMove,  { passive: false });
+    overlay.addEventListener('touchend',   onEnd,   { passive: true });
+    overlay.addEventListener('pointerdown', onStart, { passive: true });
+    overlay.addEventListener('pointermove', onMove,  { passive: false });
+    overlay.addEventListener('pointerup',   onEnd,   { passive: true });
+    overlay.addEventListener('pointercancel', onEnd, { passive: true });
+  })();
+  </script>
+  
+  
+</Layout>

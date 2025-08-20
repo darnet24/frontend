@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+const BACKEND_URL =
+  import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
+const response = await fetch(`${BACKEND_URL}/api/cms-content`);
+if (!response.ok) {
+  throw new Error(`Błąd pobierania CMS: ${response.status}`);
+}
+const cms = await response.json();
+
+// Wyciągamy dane o "O nas"
+const about = cms.about;
+if (!about) {
+  throw new Error("Nie znaleziono sekcji 'about' w CMS");
+}
+
+const {
+  about: { title, description, heading, subheading, tresc, team = [] }
+} = cms;
+---
+<Layout title={title} description={description}>
+  <!-- INTRO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800">
+    <h1 class="text-4xl font-bold mb-4">{heading}</h1>
+    <p class="text-lg max-w-3xl mx-auto">{subheading}</p>
+  </section>
+
+ <!-- DETAILED TEXT -->
+ <section class="py-16 px-6 max-w-5xl mx-auto text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+  {tresc.map((akapit, idx) => (
+    <p class="mb-6" key={idx}>{akapit}</p>
+  ))}
+</section>
+
+  <!-- TEAM -->
+  <section class="py-16 px-6 bg-gray-800 text-white">
+    <h2 class="text-3xl font-bold mb-6 text-center">Poznaj nasz zespół</h2>
+    <p class="max-w-3xl mx-auto text-gray-300 mb-10 text-center">
+      Nasz zespół składa się z doświadczonych specjalistów IT – administratorów, inżynierów sieci, konsultantów
+      helpdesk i architektów systemowych. Działamy wspólnie, aby dostarczyć Ci najwyższy poziom wsparcia.
+    </p>
+    <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      {team.map((member) => (
+        <div class="bg-gray-900 p-6 rounded-lg shadow-lg">
+          <img
+            src={member.photo}
+            alt={member.name}
+            class="w-full h-64 md:h-80 object-cover rounded-md mb-4"
+            loading="lazy"
+          />
+          <h3 class="text-xl font-semibold mb-1">{member.name}</h3>
+          <p class="text-yellow-400 mb-2">{member.role}</p>
+          <p class="text-gray-300">{member.description}</p>
+          <a  class="block hover:text-yellow-300 text-yellow-400"  href={`mailto:${member.mail}`}>  {member.mail}</a>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>

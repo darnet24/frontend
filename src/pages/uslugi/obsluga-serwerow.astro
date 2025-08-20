@@ -1,0 +1,188 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout
+  title="Obsługa serwerów – Windows/Linux, wirtualizacja, backup, monitoring | Darnet24"
+  description="Administracja serwerami Windows i Linux, wirtualizacja (Hyper-V/VMware/Proxmox), Active Directory, SQL, kopie zapasowe, monitoring i szybka reakcja w SLA."
+>
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <h1 class="text-4xl font-bold mb-4">Obsługa serwerów</h1>
+    <p class="text-lg max-w-3xl mx-auto">
+      Administracja Windows i Linux, wirtualizacja (Hyper-V/VMware/Proxmox), Active Directory i SQL.
+      Backup, monitoring 24/7 i szybka reakcja w SLA.
+    </p>
+    <div class="mt-8">
+      <a href="/kontakt" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded transition">
+        Zapytaj o wycenę
+      </a>
+    </div>
+  </section>
+
+  <!-- ZAKRES PRAC -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Co obejmuje obsługa</h2>
+    <div class="grid gap-8 md:grid-cols-2 text-gray-200">
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Systemy i wirtualizacja</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Windows Server (AD, DNS, DHCP, RDS), Linux (Debian/Ubuntu/CentOS)</li>
+          <li>Wirtualizacja: Hyper-V, VMware ESXi, Proxmox (KVM/LXC)</li>
+          <li>Planowanie zasobów, HA, aktualizacje i łatki bezpieczeństwa</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Usługi katalogowe i pliki</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Active Directory: OU, GPO, logon scripts, delegacje</li>
+          <li>Serwery plików: uprawnienia, Shadow Copies, Quotas</li>
+          <li>SMB/NFS/FTP, drukarki sieciowe, skan do folderu</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Aplikacje i bazy</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>MS SQL Server: instalacja, maintenance plan, backup i odtwarzanie</li>
+          <li>Serwery aplikacyjne (ERP/HR/księgowe), IIS/Apache/Nginx</li>
+          <li>Usługi pocztowe i integracje z Microsoft 365</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Backup i monitoring</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Backup VM/baz/plików (on-site i chmura), retencja i testy odtwarzania</li>
+          <li>Monitoring zasobów i usług, alerty e-mail/SMS</li>
+          <li>Procedury DR/BCP, testy awaryjne</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCES WSPÓŁPRACY -->
+  <section class="py-16 px-6 bg-gray-800">
+    <div class="max-w-5xl mx-auto text-white">
+      <h2 class="text-3xl font-bold text-center mb-10">Jak działamy</h2>
+      <ol class="grid md:grid-cols-4 gap-6 text-center">
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">1</span>
+          <p class="mt-3">Audyt serwera i środowiska</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">2</span>
+          <p class="mt-3">Plan usprawnień i zabezpieczeń</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">3</span>
+          <p class="mt-3">Wdrożenie: aktualizacje, backup, monitoring</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">4</span>
+          <p class="mt-3">Stała obsługa i SLA</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- WIDEŁKI / PAKIETY -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Pakiety i stawki</h2>
+    <div class="grid gap-8 md:grid-cols-3">
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Ad-hoc / godziny</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">200–300 zł/h</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Zdalnie lub on-site</li>
+          <li>Min. 1 godzina</li>
+          <li>Po godzinach +50%</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Mały serwer</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">599–999 zł/mies.</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>1 host lub 1–2 VM</li>
+          <li>Monitoring + backup</li>
+          <li>Czas reakcji: 2–4 h</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Środowisko VM</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">od 1 499 zł/mies.</p>
+        <ul class="list-disc list-inside text-gray-2 00 space-y-1">
+          <li>Host + kilka VM (prod/test)</li>
+          <li>Backup z retencją + test odtwarzania</li>
+          <li>SLA: reakcja &lt; 1 h</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-sm text-gray-400 mt-6 text-center">
+      Wszystkie podane ceny są cenami netto (nie zawierają podatku VAT). Finalna wycena zależy od liczby hostów/VM, wymagań SLA i zakresu wsparcia.
+    </p>
+  </section>
+
+  <!-- DODATKI / MIGRACJE -->
+  <section class="py-16 px-6 bg-gray-800">
+    <div class="max-w-6xl mx-auto text-white grid gap-8 md:grid-cols-2">
+      <div>
+        <h3 class="text-2xl font-bold mb-4">Migracje i modernizacje</h3>
+        <ul class="list-disc list-inside text-gray-200 space-y-2">
+          <li>Migracja serwera na nowy sprzęt lub do VM (P2V/V2V)</li>
+          <li>Upgrade wersji (np. 2012 → 2019/2022), wymiana kontrolera domeny</li>
+          <li>Optymalizacja storage (SSD/NVMe, RAID, iSCSI/NAS)</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-2xl font-bold mb-4">Bezpieczeństwo</h3>
+        <ul class="list-disc list-inside text-gray-200 space-y-2">
+          <li>Segmentacja, firewall, VPN, MFA dla administratorów</li>
+          <li>Hardening usług: RDP, SSH, SMB, TLS</li>
+          <li>Backup offline i procedury na wypadek ransomware</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 max-w-5xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center text-white">FAQ</h2>
+    <div class="space-y-4">
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy przejmujecie istniejące serwery po innym dostawcy?</summary>
+        <div class="mt-2">Tak. Zaczynamy od audytu, porządkujemy konta/uprawnienia, aktualizujemy i wdrażamy backup oraz monitoring.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy działacie poza godzinami pracy?</summary>
+        <div class="mt-2">Tak, na życzenie realizujemy prace po 18:00 lub w weekendy, aby nie przerywać działania firmy.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Co wchodzi w monitoring?</summary>
+        <div class="mt-2">Dysk/CPU/RAM, usługi (AD/DNS/DHCP/SQL), dostępność i alerty. W przypadku awarii reagujemy zgodnie z SLA.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Potrzebujesz opieki nad serwerem?</h2>
+    <p class="mb-6">Wyślij krótki opis środowiska (hosty, VM, usługi) – przygotujemy plan i wycenę.</p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">Skontaktuj się</a>
+  </section>
+
+  <!-- JSON-LD: Service -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"Obsługa serwerów",
+    "provider":{"@type":"LocalBusiness","name":"Darnet24"},
+    "areaServed":"Polska",
+    "serviceType":"Server administration",
+    "url":"/uslugi/obsluga-serwerow",
+    "offers":{
+      "@type":"AggregateOffer",
+      "priceCurrency":"PLN",
+      "lowPrice":"200",
+      "highPrice":"1499"
+    }
+  })}></script>
+</Layout>

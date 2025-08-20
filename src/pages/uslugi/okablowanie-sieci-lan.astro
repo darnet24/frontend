@@ -1,0 +1,169 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// (opcjonalnie) podmień na swoje zdjęcia
+/*
+const gallery = [
+  "/images/okablowanie/patchpanel.webp",
+  "/images/okablowanie/korytka.webp",
+  "/images/okablowanie/gniazdka.webp",
+  "/images/okablowanie/szafa-rack.webp",
+].filter(Boolean);
+*/
+---
+
+<Layout
+  title="Okablowanie strukturalne LAN – kable, gniazda RJ45, korytka, szafy rack | Darnet24"
+  description="Projekt i montaż okablowania strukturalnego: kable Ethernet, gniazda RJ45, patch panele, korytka, pomiary i certyfikacja. Kompleksowo – od projektu po uruchomienie i dokumentację."
+>
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <h1 class="text-4xl font-bold mb-4">Okablowanie strukturalne LAN</h1>
+    <p class="text-lg max-w-3xl mx-auto">
+      Kompleksowo wykonujemy sieci biurowe: prowadzenie kabli, montaż gniazd RJ45, korytka/peszle, patch panele i szafy rack.
+      Na koniec pomiary, opisanie portów oraz dokumentacja powykonawcza.
+    </p>
+    <div class="mt-8">
+      <a href="/kontakt" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded transition">
+        Zapytaj o wycenę
+      </a>
+    </div>
+  </section>
+
+  <!-- ZAKRES PRAC -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Co wykonujemy</h2>
+    <div class="grid gap-8 md:grid-cols-2 text-gray-200">
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Instalacje i montaż</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Prowadzenie kabli (Cat.5e / Cat.6 / Cat.6A) w korytkach/peszlach</li>
+          <li>Montaż gniazd RJ45 i keystone w puszkach/natynkowych</li>
+          <li>Patch panele, organizery kabli, oznaczanie portów</li>
+          <li>Szafy rack 10”/19” – montaż, zasilanie, wentylacja</li>
+        </ul>
+      </div>
+      <div class="space-y-3">
+        <h3 class="text-xl font-semibold text-white">Konfiguracja i uruchomienie</h3>
+        <ul class="list-disc list-inside space-y-2">
+          <li>Przełączniki (VLAN, PoE), routery, punkty dostępowe Wi-Fi</li>
+          <li>Podłączenie stanowisk, drukarek sieciowych, urządzeń VoIP</li>
+          <li>Pomiary i testy okablowania, raport przejścia (Fluke/Level)</li>
+          <li>Dokumentacja powykonawcza – mapy gniazd i numeracja</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCES -->
+  <section class="py-16 px-6 bg-gray-800">
+    <div class="max-w-5xl mx-auto text-white">
+      <h2 class="text-3xl font-bold text-center mb-10">Jak pracujemy</h2>
+      <ol class="grid md:grid-cols-4 gap-6 text-center">
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">1</span>
+          <p class="mt-3">Oględziny i zebranie wymagań (liczba gniazd, trasy)</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">2</span>
+          <p class="mt-3">Projekt trasy, dobór osprzętu, harmonogram</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">3</span>
+          <p class="mt-3">Montaż, zarabianie kabli, opis portów</p>
+        </li>
+        <li class="bg-gray-700 rounded-2xl p-6">
+          <span class="text-4xl font-extrabold text-yellow-400">4</span>
+          <p class="mt-3">Pomiary, uruchomienie i dokumentacja</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PRZYKŁADOWE WYCENY -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-10 text-white">Przykładowe widełki cenowe</h2>
+    <div class="grid gap-8 md:grid-cols-3">
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Pojedyncze gniazdo RJ45</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">120–180 zł/szt.</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Zarabianie + test ciągłości</li>
+          <li>Oznaczenie portu i opis</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Linia LAN (do 20 m)</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">250–450 zł/linia</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Prowadzenie kabla w korytku/peszlu</li>
+          <li>Gniazdo + patch panel</li>
+        </ul>
+      </div>
+      <div class="border rounded-2xl p-6 bg-white/5 backdrop-blur text-white">
+        <h3 class="text-xl font-semibold mb-2">Mała sieć biurowa</h3>
+        <p class="text-3xl font-extrabold text-yellow-400 mb-4">od 2 500 zł</p>
+        <ul class="list-disc list-inside text-gray-200 space-y-1">
+          <li>Szafa rack, patch panel, switch</li>
+          <li>Do 12 gniazd RJ45 + uruchomienie</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-sm text-gray-400 mt-6 text-center">
+      Wszystkie podane ceny są cenami netto (nie zawierają podatku VAT). Dokładna wycena zależy od długości tras, rodzaju korytek oraz trudności montażu.
+    </p>
+  </section>
+
+  <!-- GALERIA (opcjonalna) -->
+   <!--
+  {gallery.length > 0 && (
+    <section class="py-16 px-6 bg-gray-800">
+      <h2 class="text-3xl font-bold text-center mb-10 text-white">Przykładowe realizacje</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+        {gallery.map((src, i) => (
+          <figure class="rounded-xl overflow-hidden bg-gray-700">
+            <img src={src} alt={`Instalacja sieci LAN – zdjęcie ${i+1}`} class="w-full h-56 object-cover" loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+  -->
+
+  <!-- FAQ -->
+  <section class="py-16 px-6 max-w-5xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center text-white">FAQ</h2>
+    <div class="space-y-4">
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy wykonujecie prace poza godzinami pracy biura?</summary>
+        <div class="mt-2">Tak, umawiamy okna serwisowe po 18:00 lub w weekend, aby nie przerywać pracy zespołu.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy robicie pomiary i raport z testów?</summary>
+        <div class="mt-2">Tak, mierzymy ciągłość/pary oraz – jeśli wymagane – wykonujemy pomiary certyfikujące i dołączamy raport.</div>
+      </details>
+      <details class="bg-gray-800 rounded-2xl p-5 text-gray-200">
+        <summary class="cursor-pointer font-semibold text-white">Czy dostarczacie materiały?</summary>
+        <div class="mt-2">Możemy pracować na materiale inwestora lub zapewnić komplet: kable, gniazda, patch panele, korytka, szafę rack i osprzęt.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Potrzebujesz okablowania biura?</h2>
+    <p class="mb-6">Wyślij rzut pomieszczeń i liczbę gniazd – przygotujemy wstępny kosztorys.</p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">Skontaktuj się</a>
+  </section>
+
+  <!-- JSON-LD: Service -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Okablowanie strukturalne LAN",
+    "provider": { "@type": "LocalBusiness", "name": "Darnet24" },
+    "areaServed": "Polska",
+    "serviceType": "LAN cabling",
+    "url": "/uslugi/okablowanie-sieci-lan"
+  })}></script>
+</Layout>

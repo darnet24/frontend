@@ -1,0 +1,135 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Usługi IT – Darnet24"
+  description="Profesjonalne usługi IT: obsługa serwerów, okablowanie sieci LAN, programy księgowe (RAKS, WAPRO, Comarch, Insert, Symfonia, Płatnik), składanie komputerów, obsługa firm i pomoc zdalna."
+>
+  <!-- HERO -->
+  <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">
+    <h1 class="text-4xl font-bold mb-4">Usługi IT</h1>
+    <p class="text-lg max-w-3xl mx-auto">
+      Kompleksowe wsparcie dla firm i klientów indywidualnych: od okablowania i serwerów,
+      przez oprogramowanie księgowe, po składanie komputerów i szybkie wsparcie zdalne.
+    </p>
+  </section>
+
+  <!-- LISTA USŁUG -->
+  <section class="py-16 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <!-- Obsługa serwerów -->
+        <a href="/uslugi/obsluga-serwerow"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">🖥️</span>
+            <h2 class="text-xl font-bold text-white">Obsługa serwerów</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Windows / Linux, Hyper-V / VMware / Proxmox, AD/SQL, backup, monitoring, SLA.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+
+        <!-- Okablowanie LAN -->
+        <a href="/uslugi/okablowanie-sieci-lan"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">🧰</span>
+            <h2 class="text-xl font-bold text-white">Okablowanie sieci LAN</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Prowadzenie kabli, gniazda RJ45, patch panele, szafy rack, pomiary i dokumentacja.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+
+        <!-- Programy księgowe -->
+        <a href="/uslugi/programy-ksiegowe"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">📚</span>
+            <h2 class="text-xl font-bold text-white">Programy księgowe</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            RAKS, WAPRO, Comarch, Insert, Symfonia, Płatnik – instalacje, migracje, naprawy, SQL/Firebird.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+
+        <!-- Składanie komputerów -->
+        <a href="/uslugi/skladanie-komputerow"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">🛠️</span>
+            <h2 class="text-xl font-bold text-white">Składanie komputerów</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Doradztwo, montaż, okablowanie, undervolting, testy stabilności, raport i gwarancja.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+
+        <!-- Obsługa firm (outsourcing IT) -->
+        <a href="/obsluga-firm"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">🏢</span>
+            <h2 class="text-xl font-bold text-white">Obsługa firm (SLA)</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Stała opieka IT, monitoring, backupy, wsparcie zdalne i on-site, szybka reakcja.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+
+        <!-- Pomoc zdalna / Serwis -->
+        <a href="/pomoc-zdalna"
+           class="group block bg-white/5 dark:bg-white/5 border border-gray-700 rounded-2xl p-6 hover:border-yellow-400 transition">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">⚡</span>
+            <h2 class="text-xl font-bold text-white">Pomoc zdalna / Serwis</h2>
+          </div>
+          <p class="text-gray-300 text-sm">
+            Szybkie wsparcie, diagnostyka, naprawy, optymalizacja, aktualizacje oprogramowania.
+          </p>
+          <span class="inline-block mt-4 text-yellow-400 font-semibold">Zobacz szczegóły →</span>
+        </a>
+      </div>
+
+      <!-- Dodatkowe linki -->
+      <div class="text-center mt-12">
+        <a href="/cennik" class="text-yellow-400 hover:underline font-semibold">Zobacz cennik usług</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 px-6 bg-yellow-400 text-black text-center">
+    <h2 class="text-2xl font-bold mb-4">Nie wiesz od czego zacząć?</h2>
+    <p class="mb-6 max-w-2xl mx-auto">
+      Opisz krótko potrzeby (serwery, sieć, programy, stanowiska). Przygotujemy plan działań i wycenę.
+    </p>
+    <a href="/kontakt" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition">
+      Skontaktuj się
+    </a>
+  </section>
+
+  <!-- JSON-LD: CollectionPage of Services -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Usługi IT – Darnet24",
+    "url": "/uslugi",
+    "hasPart": [
+      {"@type":"Service","name":"Obsługa serwerów","url":"/uslugi/obsluga-serwerow"},
+      {"@type":"Service","name":"Okablowanie sieci LAN","url":"/uslugi/okablowanie-sieci-lan"},
+      {"@type":"Service","name":"Programy księgowe","url":"/uslugi/programy-ksiegowe"},
+      {"@type":"Service","name":"Składanie komputerów","url":"/uslugi/skladanie-komputerow"},
+      {"@type":"Service","name":"Obsługa firm (SLA)","url":"/obsluga-firm"},
+      {"@type":"Service","name":"Pomoc zdalna / Serwis","url":"/pomoc-zdalna"}
+    ]
+    })}>
+   </script>
+</Layout>
