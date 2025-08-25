@@ -2,7 +2,12 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Polityka prywatności" description="Informacje o przetwarzaniu danych osobowych na stronie darnet24.pl">
+<Layout
+  title="Polityka prywatności"
+  description="Informacje o przetwarzaniu danych osobowych na stronie darnet24.pl"
+  keywords="polityka prywatności, ochrona danych osobowych, RODO"
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
 
   <!-- HERO -->
   <section class="text-center py-20 px-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white">

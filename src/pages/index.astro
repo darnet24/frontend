@@ -2,8 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import NewsletterSection from '../components/NewsletterSection.astro';
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
 // 1) Pobierz wszystkie dane z CMS
 const BACKEND_URL =
   import.meta.env.PUBLIC_BACKEND_URL || import.meta.env.PUBLIC_API_URL;
@@ -22,12 +20,34 @@ const {
   testimonials,
   partners,
   locationsIntro,
-  locationList
+  locationList,
+  kontakt
 } = cms;
 ---
 
-<Layout title={seo.title} description={seo.description}>
-  <Navbar slot="navbar" />
+<Layout
+  title={seo.title}
+  description={seo.description}
+  keywords="obsługa informatyczna firm, serwis komputerowy Warszawa, programy księgowe"
+>
+  <script slot="head" type="application/ld+json">
+    {JSON.stringify(
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: "Darnet24",
+        url: "https://darnet24.pl/",
+        telephone: kontakt.telefon,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: kontakt.adres,
+          addressCountry: "PL"
+        }
+      },
+      null,
+      2
+    )}
+  </script>
 
     <!-- HERO -->
     <section class="relative text-center py-28 px-6 text-white">

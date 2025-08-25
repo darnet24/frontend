@@ -52,9 +52,15 @@ if (!place) {
 // 5) Przygotowujemy wartości SEO
 const pageTitle = place.title || place.heading;
 const pageDescription = place.description || `Serwis komputerowy w ${location}`;
+const city = place.heading.split("–")[1].trim();
+const pageKeywords = `serwis komputerowy ${city}, naprawa komputerów ${city}, obsługa IT ${city}`;
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+>
   <!-- HERO -->
   <section class="py-20 px-6 bg-gray-800 text-center text-white">
     <h1 class="text-4xl font-bold mb-4">{place.heading}</h1>

@@ -49,6 +49,8 @@ const pageTitle = sw.title || sw.heading || `Usługi dla ${system.toUpperCase()}
 const pageDescription =
   sw.description ||
   `Instalacja, aktualizacja, migracja oraz serwis ${system.toUpperCase()} – bazy SQL/Firebird, backup, optymalizacja.`;
+const systemName = sw.shortName || system.toUpperCase();
+const pageKeywords = `${systemName} program księgowy, wdrożenie ${systemName}, serwis ${systemName}`;
 
 // pomocnicze
 const hasPricing = Array.isArray(sw.pricing) && sw.pricing.length > 0;
@@ -56,7 +58,11 @@ const hasBullets = Array.isArray(sw.points) && sw.points.length > 0;
 const hasFaq = Array.isArray(sw.faq) && sw.faq.length > 0;
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+>
   <!-- HERO -->
   <section class="py-20 px-6 bg-gray-800 text-center text-white">
     <h1 class="text-4xl font-bold mb-4">{sw.heading || pageTitle}</h1>
