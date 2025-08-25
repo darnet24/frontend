@@ -3,8 +3,17 @@ import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
 import "../styles/global.css";
 
-// Odbieramy title i description przekazane z każdej strony
-const { title, description } = Astro.props
+// Odbieramy dane SEO przekazane z każdej strony
+// Dodatkowe właściwości są opcjonalne
+const {
+  title,
+  description,
+  keywords,
+  image = "/images/hero-bg.webp",
+} = Astro.props;
+
+// Budujemy kanoniczny adres URL bieżącej podstrony
+const canonical = Astro.url.href;
 ---
 <!DOCTYPE html>
 <html lang="pl" class="dark scroll-smooth">
@@ -13,7 +22,24 @@ const { title, description } = Astro.props
     <title>{title}</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <slot name="head" />
   </head>
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white font-sans">
     <Navbar />
